@@ -1,0 +1,20 @@
+# refers to `ansible` st2 integration pack:
+# https://github.com/StackStorm/st2contrib/tree/master/packs/ansible
+---
+name: "chatops.ansible_local"
+action_ref: "ansible.command_local"
+description: "Run Ansible command on local machine"
+formats:
+  - display: "ansible <command>"
+    representation:
+      - "ansible {{ args }}"
+result:
+  format: |
+    Ansible command `{{ execution.parameters.args }}` result: {~}
+    {% if execution.result.stderr %}*Stdout:* {% endif %}
+    ```{{ execution.result.stdout }}```
+    {% if execution.result.stderr %}*Stderr:* ```{{ execution.result.stderr }}```{% endif %}
+  extra:
+    slack:
+      color: "{% if execution.result.succeeded %}good{% else %}danger{% endif %}"
+
