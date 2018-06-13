@@ -1,6 +1,6 @@
 ### Place information about your pack version here.
 ---
-ref: st2_chatops_aliases
+ref: stackstorm_chatops_aliases
 name: st2_chatops_aliases
 description: Pack with sample Ansible ChatOps aliases
 keywords:
@@ -8,5 +8,5 @@ keywords:
   - aliases
   - ansible
 version: 0.2.0
-author: armab
-email: armab@stackstorm.com
+author: anson.kee
+email: anson.kee@gmail.com

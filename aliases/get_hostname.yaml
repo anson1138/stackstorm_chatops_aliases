@@ -3,9 +3,9 @@ name: chatops.ansible_get_hostname
 action_ref: st2_chatops_aliases.get_hostname
 description: Show hostname
 formats:
-  - display: "gethost <hosts>"
+  - display: "gethostname <hosts>"
     representation:
-      - "gethost {{ hosts }}"
+      - "gethostname {{ hosts }}"
 result:
   format: |
     Here is your status for `{{ execution.parameters.hosts }}` host(s): {~}
