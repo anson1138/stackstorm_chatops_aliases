@@ -1,6 +1,6 @@
 ---
 name: chatops.ansible_get_hostname
-action_ref: st2_chatops_aliases.get_hostname
+action_ref: stackstorm_chatops_aliases.get_hostname
 description: Show hostname
 formats:
   - display: "gethostname <hosts>"
