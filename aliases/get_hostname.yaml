@@ -1,0 +1,24 @@
+---
+name: chatops.ansible_get_hostname
+action_ref: st2_chatops_aliases.get_hostname
+description: Show hostname
+formats:
+  - display: "gethost <hosts>"
+    representation:
+      - "gethost {{ hosts }}"
+result:
+  format: |
+    Here is your status for `{{ execution.parameters.hosts }}` host(s): {~}
+    ```{{ execution.result.stdout }}```
+  extra:
+    slack:
+      color: "{% if execution.result.succeeded %}good{% else %}danger{% endif %}"
+      fields:
+        - title: Alive
+          value: "{{ execution.result.stdout|regex_replace('(?!SUCCESS).', '')|wordcount }}"
+          short: true
+        - title: Dead
+          value: "{{ execution.result.stdout|regex_replace('(?!UNREACHABLE).', '')|wordcount }}"
+          short: true
+      footer: "{{ execution.id }}"
+      footer_icon: "https://stackstorm.com/wp/wp-content/uploads/2015/01/favicon.png"

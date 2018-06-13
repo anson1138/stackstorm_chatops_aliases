@@ -1,0 +1,28 @@
+# this is command alias for `actions/server_status.yaml` action
+# allows to run ChatOps command: `status 'web'`
+# eq: `/opt/stackstorm/virtualenvs/ansible/bin/ansible web --module-name=ping`
+---
+name: chatops.ansible_server_status
+action_ref: st2_chatops_aliases.server_status
+description: Show status for hosts (ansible ping module)
+formats:
+  - display: "status <hosts>"
+    representation:
+      - "status {{ hosts }}"
+      - "ping {{ hosts }}"
+result:
+  format: |
+    Here is your status for `{{ execution.parameters.hosts }}` host(s): {~}
+    ```{{ execution.result.stdout }}```
+  extra:
+    slack:
+      color: "{% if execution.result.succeeded %}good{% else %}danger{% endif %}"
+      fields:
+        - title: Alive
+          value: "{{ execution.result.stdout|regex_replace('(?!SUCCESS).', '')|wordcount }}"
+          short: true
+        - title: Dead
+          value: "{{ execution.result.stdout|regex_replace('(?!UNREACHABLE).', '')|wordcount }}"
+          short: true
+      footer: "{{ execution.id }}"
+      footer_icon: "https://stackstorm.com/wp/wp-content/uploads/2015/01/favicon.png"

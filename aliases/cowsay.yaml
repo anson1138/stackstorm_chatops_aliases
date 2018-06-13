@@ -1,0 +1,21 @@
+# this is command alias for `actions/cowsay.yaml` action
+# allows to run ChatOps command: `cowsay Holy ChatOps Cow!`
+# eq: `/usr/games/cowsay Holy ChatOps Cow!`
+---
+name: chatops.cowsay
+action_ref: st2_chatops_aliases.cowsay
+description: Draws a cow that says what you want
+formats:
+  - display: "cowsay <message>"
+    representation:
+      - "cowsay {{ message }}"
+ack:
+  enabled: false
+result:
+  format: |
+    {% if execution.status == 'succeeded' %}Here is your cow: ```{{ execution.result.stdout }}``` {~}{% else %}
+    Sorry, no cows this time {~}
+    Exit Code: `{{ execution.result.return_code }}`
+    Stderr: ```{{ execution.result.stderr }}```
+    Hint: Make sure `cowsay` utility is installed.
+    {% endif %}

@@ -1,0 +1,33 @@
+# this is command alias for `actions/update_package.yaml` action
+# allows to run ChatOps command: `update "bash" on "all"`
+# see playbook: `ansible/update_package.yaml`
+---
+name: chatops.ansible_package_update
+action_ref: st2_chatops_aliases.update_package
+description: Update package on remote hosts
+formats:
+  - display: "update <package> on <hosts>"
+    representation:
+      - "update {{ package }} on {{ hosts }}"
+      - "upgrade {{ package }} on {{ hosts }}"
+result:
+  format: |
+    Update package `{{ execution.parameters.package }}` on `{{ execution.parameters.hosts }}` host(s): {~}
+    {% if execution.result.stderr %}
+    *Exit Status*: `{{ execution.result.return_code }}`
+    *Stderr:* ```{{ execution.result.stderr }}```
+    *Stdout:*
+    {% endif %}
+    ```{{ execution.result.stdout }}```
+  extra:
+    slack:
+      color: "{% if execution.result.succeeded %}good{% else %}danger{% endif %}"
+      fields:
+        - title: Updated nodes
+          value: "{{ execution.result.stdout|regex_replace('(?!changed=1).', '')|wordcount }}"
+          short: true
+        - title: Executed in
+          value: ":timer_clock: {{ execution.elapsed_seconds | to_human_time_from_seconds }}"
+          short: true
+      footer: "{{ execution.id }}"
+      footer_icon: "https://stackstorm.com/wp/wp-content/uploads/2015/01/favicon.png"

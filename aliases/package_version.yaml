@@ -1,0 +1,18 @@
+# this is command alias for `actions/package_version` action
+# allows to run ChatOps command: `show version "bash" on "all"`
+# eq: /opt/stackstorm/virtualenvs/ansible/bin/ansible all -m shell -a "dpkg -s bash | grep 'Version' | sed 's/^Version: //'"
+---
+name: chatops.package_version
+action_ref: st2_chatops_aliases.package_version
+description: Show package versions on hosts
+formats:
+  - display: "show version <package> on <hosts>"
+    representation:
+      - "show version {{ package }} on {{ hosts }}"
+      - "show {{ package }} version on {{ hosts }}"
+result:
+  format: |
+    `{{ execution.parameters.package }}` versions on `{{ execution.parameters.hosts }}`: {~}
+    {% if execution.result.stderr %}*Stdout:* {% endif %}
+    ```{{ execution.result.stdout }}```
+    {% if execution.result.stderr %}*Stderr:* ```{{ execution.result.stderr }}```{% endif %}

@@ -1,0 +1,9 @@
+---
+- hosts: tag_app_backend
+  gather_facts: false
+  tasks:
+    - name: get Hostname
+      shell: hostname -f
+      register: output
+    - name: output Hostname
+      debug: msg="{{ output.stdout }}"

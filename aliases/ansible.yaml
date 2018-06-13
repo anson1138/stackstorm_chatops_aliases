@@ -17,4 +17,3 @@ result:
   extra:
     slack:
       color: "{% if execution.result.succeeded %}good{% else %}danger{% endif %}"
-
