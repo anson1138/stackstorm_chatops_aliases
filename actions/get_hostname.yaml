@@ -15,7 +15,8 @@ parameters:
   cmd:
     description: "Command to run"
     immutable: true
-    default: "/opt/stackstorm/virtualenvs/ansible/bin/ansible-playbook --inventory-file=/opt/stackstorm/packs/${ST2_ACTION_PACK_NAME}/playbooks/ec2.py /opt/stackstorm/packs/${ST2_ACTION_PACK_NAME}/playbooks/get_hostname.yaml"
+      # inventory-file ec2.py is now defined in /root/.ansible.cfg
+    default: "/opt/stackstorm/virtualenvs/ansible/bin/ansible-playbook /opt/stackstorm/packs/${ST2_ACTION_PACK_NAME}/playbooks/get_hostname.yaml"
   hosts:
     description: "Ansible hosts"
     type: string
