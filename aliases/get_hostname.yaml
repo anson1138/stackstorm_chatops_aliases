@@ -3,12 +3,12 @@ name: chatops.ansible_get_hostname
 action_ref: stackstorm_chatops_aliases.get_hostname
 description: Show hostname
 formats:
-  - display: "gethostname <hosts>"
+  - display: "gethostname <app>"
     representation:
-      - "gethostname {{ hosts }}"
+      - "gethostname {{ app }}"
 result:
   format: |
-    Here is your status for `{{ execution.parameters.hosts }}` host(s): {~}
+    Here is your status for `{{ execution.parameters.app }}` host(s): {~}
     ```{{ execution.result.stdout }}```
   extra:
     slack:

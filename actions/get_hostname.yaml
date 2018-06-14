@@ -14,13 +14,17 @@ parameters:
     default: 6000
   cmd:
     description: "Command to run"
-    immutable: true
+    immutable: false
       # inventory-file ec2.py is now defined in /root/.ansible.cfg
-    default: "/opt/stackstorm/virtualenvs/ansible/bin/ansible-playbook /opt/stackstorm/packs/${ST2_ACTION_PACK_NAME}/playbooks/get_hostname.yaml"
+    default: "/opt/stackstorm/virtualenvs/ansible/bin/ansible-playbook /opt/stackstorm/packs/${ST2_ACTION_PACK_NAME}/playbooks/get_hostname.yaml --extra-vars='app={{app}}'"
   hosts:
     description: "Ansible hosts"
     type: string
     required: false
+  app:
+    description: "Ansible aws app tag"
+    type: string
+    required: true
   package:
     description: "Package to upgrade"
     type: string
